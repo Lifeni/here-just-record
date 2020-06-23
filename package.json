@@ -1,0 +1,31 @@
+{
+  "name": "here-just-record",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "cd ./server && node db.js && cd .. && next dev",
+    "build": "next build",
+    "start": "next start"
+  },
+  "dependencies": {
+    "@material-ui/core": "^4.10.2",
+    "@material-ui/icons": "^4.9.1",
+    "@material-ui/lab": "^4.0.0-alpha.56",
+    "bcrypt": "^5.0.0",
+    "cookie": "^0.4.1",
+    "cross-fetch": "^3.0.5",
+    "jsonwebtoken": "^8.5.1",
+    "koa": "^2.12.1",
+    "koa-body": "^4.2.0",
+    "koa-router": "^9.0.1",
+    "markdown-it": "^11.0.0",
+    "moment": "^2.27.0",
+    "next": "9.4.4",
+    "node-pre-gyp": "^0.15.0",
+    "react": "16.13.1",
+    "react-dom": "16.13.1",
+    "react-markdown-editor-lite": "^1.1.5",
+    "sqlite": "^4.0.11",
+    "sqlite3": "https://github.com/mapbox/node-sqlite3/tarball/master"
+  }
+}

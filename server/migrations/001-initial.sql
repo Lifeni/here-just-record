@@ -1,0 +1,35 @@
+-- Up
+CREATE TABLE Post (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    date TEXT,
+    tag INTEGER REFERENCES Tag(id),
+    public INTEGER
+);
+CREATE TABLE Text(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    post INTEGER REFERENCES Post(id),
+    content TEXT
+);
+CREATE TABLE File(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    post INTEGER REFERENCES Post(id),
+    type TEXT,
+    url TEXT
+);
+CREATE TABLE PostScript(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    post INTEGER REFERENCES Post(id),
+    date TEXT,
+    content TEXT
+);
+CREATE TABLE Tag(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    name TEXT,
+    description TEXT
+);
+-- Down
+DROP TABLE Post;
+DROP TABLE Text;
+DROP TABLE File;
+DROP TABLE PostScript;
+DROP TABLE Tag;

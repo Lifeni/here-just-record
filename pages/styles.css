@@ -1,0 +1,44 @@
+body {
+  min-height: 100vh;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.hide {
+  display: none !important;
+}
+
+.show {
+  display: block;
+}
+
+.MuiCardHeader-action {
+  margin: 0 !important;
+}
+
+.MuiChip-icon {
+  margin-left: 8px !important;
+}
+
+.MuiCardHeader-title {
+  font-size: 1rem !important;
+}
+
+/* .MuiListItemIcon-root {
+  min-width: 40px !important;
+} */
+
+
+.rc-md-editor .editor-container .sec-md .input {
+  padding: 24px 32px !important;
+  font-size: 16px !important;
+  overflow-y: auto !important;
+  font-family: Roboto, -apple-system, BlinkMacSystemFont, Segoe UI, Helvetica,
+    Arial, sans-serif, Apple Color Emoji, Segoe UI Emoji;
+}
+
+.MuiDialog-paperWidthFalse {
+  max-width: 360px !important;
+  padding: 8px;
+}
