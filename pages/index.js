@@ -1,27 +1,22 @@
-import {
-  makeStyles,
-  Container,
-  Backdrop,
-  CircularProgress,
-} from "@material-ui/core"
-import { useContext, useEffect, useState, createContext } from "react"
+import { makeStyles, Container, Grid } from "@material-ui/core"
+import { useState } from "react"
 import Router from "next/router"
 
 import { SiteContext } from "../components/SiteContext"
-import Content from "../components/Content"
+import Editor from "../components/Editor"
 import FloatButton from "../components/FloatButton"
-import Main from "../components/Main"
+import NavBar from "../components/NavBar"
+import PostList from "../components/PostList"
 import TopBar from "../components/TopBar"
 
 const useStyles = makeStyles(theme => ({
-  backdrop: {
-    position: "fixed",
-    top: 0,
-    left: 0,
-    zIndex: "200",
-    width: "100vw",
-    height: "100vh",
-    color: "#ffffff",
+  grid: {
+    width: "100%",
+    maxWidth: "960px",
+    flexGrow: 1,
+    zIndex: 12,
+    margin: "0 auto",
+    padding: theme.spacing(1),
   },
 }))
 
@@ -37,25 +32,28 @@ export default function Home({ siteData }) {
         .then(res => {
           if (res.code === 0) {
             setData({
-              config: siteData.config,
+              config: data.config,
               posts: res.data,
-              tags: siteData.tags,
+              tags: data.tags,
             })
           }
         })
+      console.log("up post", data)
     },
     updateTag: () => {
       fetch("/api/tag")
         .then(response => response.json())
         .then(res => {
+          console.log("tag res", res)
           if (res.code === 0) {
             setData({
-              config: siteData.config,
-              posts: siteData.posts,
+              config: data.config,
+              posts: data.posts,
               tags: res.data,
             })
           }
         })
+      console.log("up tag", data)
     },
   }
 
@@ -66,8 +64,20 @@ export default function Home({ siteData }) {
         disableGutters={true}
         className={classes.container}
       >
-        <TopBar siteData={siteData} />
-        <Content siteData={siteData}></Content>
+        <TopBar />
+        <Grid container spacing={2} className={classes.grid}>
+          <Grid item xs={4}>
+            <nav>
+              <NavBar></NavBar>
+            </nav>
+          </Grid>
+          <Grid item xs={8}>
+            <main>
+              <Editor></Editor>
+              <PostList></PostList>
+            </main>
+          </Grid>
+        </Grid>
         <FloatButton></FloatButton>
       </Container>
     </SiteContext.Provider>
@@ -77,7 +87,7 @@ export default function Home({ siteData }) {
 Home.getInitialProps = async ctx => {
   const data = await fetch("http://localhost:3000/api/home", {
     headers: {
-      cookie: ctx.req.headers.cookie,
+      cookie: ctx.req ? ctx.req.headers.cookie : null,
     },
   })
 
@@ -95,7 +105,6 @@ Home.getInitialProps = async ctx => {
   }
 
   const json = await data.json()
-  // console.log(json)
 
   return { siteData: json }
 }

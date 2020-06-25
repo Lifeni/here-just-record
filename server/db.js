@@ -10,6 +10,7 @@ const sqlite3 = require("sqlite3")
 
   await db.migrate({ force: true })
 
-  const post = await db.all("SELECT * FROM Post")
-  console.log("Post", JSON.stringify(post, null, 4))
+  // debug
+  // const post = await db.all("SELECT * FROM TextList")
+  // console.log("Post", JSON.stringify(post, null, 4))
 })()

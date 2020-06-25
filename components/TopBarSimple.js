@@ -1,18 +1,18 @@
-import { Avatar, Box, ListItemIcon } from "@material-ui/core"
 import AppBar from "@material-ui/core/AppBar"
+import Box from "@material-ui/core/Box"
 import IconButton from "@material-ui/core/IconButton"
+import ListItemIcon from "@material-ui/core/ListItemIcon"
 import Menu from "@material-ui/core/Menu"
 import MenuItem from "@material-ui/core/MenuItem"
 import { makeStyles } from "@material-ui/core/styles"
 import Toolbar from "@material-ui/core/Toolbar"
 import Typography from "@material-ui/core/Typography"
+import ArrowBackIcon from "@material-ui/icons/ArrowBack"
 import ExitToAppIcon from "@material-ui/icons/ExitToApp"
-import MenuIcon from "@material-ui/icons/Menu"
 import MoreIcon from "@material-ui/icons/MoreVert"
 import SearchIcon from "@material-ui/icons/Search"
-import moment from "moment"
-import { useContext, useEffect, useState } from "react"
-import { SiteContext } from "../components/SiteContext"
+import Link from "next/link"
+import { useState } from "react"
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -30,43 +30,35 @@ const useStyles = makeStyles(theme => ({
     paddingBottom: theme.spacing(4),
   },
   title: {
-    lineHeight: "2.5rem",
+    lineHeight: "4rem",
   },
   subtitle: {
-    lineHeight: "2rem",
+    lineHeight: "2.5rem",
   },
-  titlebar: {
+  description: {
+    lineHeight: "2rem",
+    fontSize: "1.25rem",
+  },
+  titleBar: {
     width: "100%",
     height: "100%",
     minHeight: "160px",
-    paddingLeft: "208px",
+    paddingTop: "32px",
+    display: "flex",
+    flexDirection: "row",
+    alignItems: "flex-end",
+    justifyContent: "space-between",
+  },
+  titleBarLeft: {
     display: "flex",
     flexDirection: "column",
     alignItems: "flex-start",
     justifyContent: "flex-end",
-  },
-  timebar: {
-    height: "100%",
-    minHeight: "160px",
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "flex-start",
-    justifyContent: "flex-end",
-  },
-  avatar: {
-    position: "absolute",
-    left: "60px",
-    bottom: "-40px",
-    width: "180px",
-    height: "180px",
-    boxShadow: "0 14px 28px rgba(0,0,0,0.1), 0 10px 10px rgba(0,0,0,0.08)",
   },
 }))
 
-export default function TopBar() {
+export default function TopBarSimple({ title, description, length }) {
   const classes = useStyles()
-  const [timeMessage, setTimeMessage] = useState("你好")
-  const siteData = useContext(SiteContext)
   const [menuAnchor, setMenuAnchor] = useState(null)
 
   const handleMenuClick = event => {
@@ -89,53 +81,40 @@ export default function TopBar() {
     setMenuAnchor(null)
   }
 
-  const now = new Date().getHours()
-  useEffect(() => {
-    if (now >= 4 && now < 8) {
-      setTimeMessage("早上好")
-    } else if (now >= 8 && now < 12) {
-      setTimeMessage("上午好")
-    } else if (now >= 12 && now < 14) {
-      setTimeMessage("中午好")
-    } else if (now >= 14 && now < 18) {
-      setTimeMessage("下午好")
-    } else if (now >= 18 || now < 4) {
-      setTimeMessage("晚上好")
-    }
-  }, [now])
-
   return (
     <AppBar position="static" className={classes.root} elevation={0}>
-      <Avatar
-        className={classes.avatar}
-        src={siteData.data.config ? siteData.data.config.user.avatar : ""}
-      ></Avatar>
       <Toolbar className={classes.toolbar}>
-        <IconButton
-          edge="start"
-          className={classes.menuButton}
-          color="inherit"
-          aria-label="open drawer"
-        >
-          <MenuIcon />
-        </IconButton>
-        <Box className={classes.titlebar}>
-          <Typography className={classes.title} variant="h5" noWrap>
-            {timeMessage}，
-            {siteData.data.config ? siteData.data.config.user.name : ""}
-          </Typography>
-          <Typography className={classes.subtitle} variant="subtitle1" noWrap>
-            截止到今天，你一共写了{" "}
-            {siteData.data.posts ? siteData.data.posts.length : "0"} 篇文章
-          </Typography>
-        </Box>
-        <Box className={classes.timebar}>
-          <Typography className={classes.subtitle} variant="subtitle1" noWrap>
-            构建：<strong>开发版本</strong>
-          </Typography>
-          <Typography className={classes.subtitle} variant="subtitle1" noWrap>
-            {moment().format("YYYY 年 M 月 D 日 dddd")}
-          </Typography>
+        <Link href="/" shallow>
+          <IconButton
+            edge="start"
+            className={classes.menuButton}
+            color="inherit"
+            aria-label="返回主页"
+          >
+            <ArrowBackIcon />
+          </IconButton>
+        </Link>
+
+        <Box className={classes.titleBar}>
+          <Box className={classes.titleBarLeft}>
+            <Typography className={classes.title} variant="h4" noWrap>
+              {title}
+            </Typography>
+            {description ? (
+              <Typography
+                className={classes.description}
+                variant="subtitle1"
+                noWrap
+              >
+                {description}
+              </Typography>
+            ) : null}
+          </Box>
+          {length ? (
+            <Typography className={classes.subtitle} variant="h5" noWrap>
+              一共有 {length} 篇
+            </Typography>
+          ) : null}
         </Box>
         <IconButton aria-label="search" color="inherit">
           <SearchIcon />

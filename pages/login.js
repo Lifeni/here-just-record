@@ -1,18 +1,14 @@
 import {
   makeStyles,
-  Backdrop,
   TextField,
   Card,
   CardContent,
   CardActions,
   Typography,
   IconButton,
-  Fade,
 } from "@material-ui/core"
 import SendIcon from "@material-ui/icons/Send"
-// import Context from "./Context"
-import { useState, useContext, useRef } from "react"
-import Router from "next/router"
+import { useState, useRef } from "react"
 
 const useStyles = makeStyles(theme => ({
   background: {
@@ -56,7 +52,7 @@ const useStyles = makeStyles(theme => ({
   },
 }))
 
-export default function LoginWindow({ className }) {
+export default function Login() {
   const classes = useStyles()
   const [errorStatus, setErrorStatus] = useState(false)
   const [emptyStatus, setEmptyStatus] = useState(true)
@@ -97,7 +93,7 @@ export default function LoginWindow({ className }) {
   }
 
   return (
-    <div className={classes.background + " " + className} id="background">
+    <div className={classes.background} id="background">
       <Card className={classes.card} variant="elevation" elevation={6}>
         <CardContent>
           <Typography
@@ -120,7 +116,7 @@ export default function LoginWindow({ className }) {
               type="password"
               className={classes.textfield}
               error={errorStatus}
-              helperText={errorStatus ? "密码错误" : ""}
+              helperText={errorStatus ? "密码错误" : null}
               onChange={handleChange}
               inputRef={passwordRef}
               required

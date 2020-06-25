@@ -30,5 +30,6 @@ yarn-error.log*
 .env.production.local
 
 /.vscode
+/.counter
 /configs
-server/record.sqlite
+*.sqlite

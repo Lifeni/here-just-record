@@ -1,19 +1,8 @@
-import React from "react"
 import { makeStyles } from "@material-ui/core/styles"
-import Button from "@material-ui/core/Button"
+import PostAddIcon from "@material-ui/icons/PostAdd"
 import SpeedDial from "@material-ui/lab/SpeedDial"
 import SpeedDialIcon from "@material-ui/lab/SpeedDialIcon"
-import SpeedDialAction from "@material-ui/lab/SpeedDialAction"
-import FileCopyIcon from "@material-ui/icons/FileCopyOutlined"
-import SaveIcon from "@material-ui/icons/Save"
-import PrintIcon from "@material-ui/icons/Print"
-import ShareIcon from "@material-ui/icons/Share"
-import FavoriteIcon from "@material-ui/icons/Favorite"
-import EditIcon from "@material-ui/icons/Edit"
-import LabelIcon from "@material-ui/icons/Label"
-import PostAddIcon from "@material-ui/icons/PostAdd"
-import InsertDriveFileIcon from "@material-ui/icons/InsertDriveFile"
-import ImageIcon from "@material-ui/icons/Image"
+import React from "react"
 
 const useStyles = makeStyles(theme => ({
   speedDial: {
@@ -25,19 +14,9 @@ const useStyles = makeStyles(theme => ({
   },
 }))
 
-// const actions = [
-//   { icon: <LabelIcon />, name: "Tag" },
-//   { icon: <InsertDriveFileIcon />, name: "File" },
-// ]
-
 export default function FloatButton() {
   const classes = useStyles()
   const [open, setOpen] = React.useState(false)
-  const [hidden, setHidden] = React.useState(false)
-
-  const handleVisibility = () => {
-    setHidden(prevHidden => !prevHidden)
-  }
 
   const handleOpen = () => {
     setOpen(true)
@@ -47,10 +26,9 @@ export default function FloatButton() {
     setOpen(false)
   }
 
-  const handleClick = e => {
+  const handleClick = () => {
     document.querySelector("html").style.scrollBehavior = "smooth"
     document.querySelector("body").style.scrollBehavior = "smooth"
-    window.scrollTo(0, 0)
     document.querySelector("textarea").focus()
   }
 
@@ -58,23 +36,13 @@ export default function FloatButton() {
     <SpeedDial
       ariaLabel="浮动按钮"
       className={classes.speedDial}
-      hidden={hidden}
+      hidden={false}
       icon={<SpeedDialIcon openIcon={<PostAddIcon />} />}
       onClose={handleClose}
       onOpen={handleOpen}
       onClick={handleClick}
       open={open}
       data-action="Edit"
-    >
-      {/* {actions.map(action => (
-        <SpeedDialAction
-          key={action.name}
-          data-action={action.name}
-          icon={action.icon}
-          tooltipTitle={action.name}
-          // onClick={handleClick}
-        />
-      ))} */}
-    </SpeedDial>
+    ></SpeedDial>
   )
 }

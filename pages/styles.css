@@ -1,7 +1,5 @@
 body {
   min-height: 100vh;
-  margin: 0;
-  padding: 0;
   box-sizing: border-box;
 }
 
@@ -11,6 +9,14 @@ body {
 
 .show {
   display: block;
+}
+
+.MuiIconButton-root[data-like="1"] svg {
+  color: #f44336;
+}
+
+.markdown-body img {
+  border-radius: 4px;
 }
 
 .MuiCardHeader-action {
@@ -25,11 +31,6 @@ body {
   font-size: 1rem !important;
 }
 
-/* .MuiListItemIcon-root {
-  min-width: 40px !important;
-} */
-
-
 .rc-md-editor .editor-container .sec-md .input {
   padding: 24px 32px !important;
   font-size: 16px !important;
@@ -38,7 +39,29 @@ body {
     Arial, sans-serif, Apple Color Emoji, Segoe UI Emoji;
 }
 
+.MuiOutlinedInput-inputMultiline {
+  font-family: Roboto, -apple-system, BlinkMacSystemFont, Segoe UI, Helvetica,
+    Arial, sans-serif, Apple Color Emoji, Segoe UI Emoji !important;
+}
+
 .MuiDialog-paperWidthFalse {
-  max-width: 360px !important;
+  width: 360px !important;
+  max-width: calc(100vw - 64px) !important;
   padding: 8px;
+}
+
+.MuiDialog-paperWidthLg {
+  width: 480px !important;
+  max-width: calc(100vw - 64px) !important;
+  padding: 8px;
+}
+
+.MuiDialog-paperWidthXl {
+  width: 720px !important;
+  max-width: calc(100vw - 64px) !important;
+  padding: 8px;
+}
+
+.MuiCardMedia-root + .MuiCardContent-root {
+  padding-top: 16px;
 }

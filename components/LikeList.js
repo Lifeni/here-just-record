@@ -102,7 +102,7 @@ function BootstrapTooltip(props) {
   return <Tooltip arrow classes={classes} {...props} />
 }
 
-export default function TagList({ data }) {
+export default function LikeList({ data }) {
   const classes = useStyles()
   const [menuAnchor, setMenuAnchor] = useState(null)
   const [currentPost, setCurrentPost] = useState(null)

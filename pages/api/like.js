@@ -1,13 +1,10 @@
-import fs from "fs"
+const path = require("path")
 const sqlite = require("sqlite")
 const sqlite3 = require("sqlite3")
-const path = require("path")
-const moment = require("moment")
 
 const { verify } = require("./token")
 
-export default async function Home(req, res) {
-  // console.log(req.cookies)
+export default async function Like(req, res) {
   if (req.cookies.auth && verify(req.cookies.auth)) {
     const db = await sqlite.open({
       filename: path.join(process.cwd(), "server/record.sqlite"),
@@ -16,7 +13,9 @@ export default async function Home(req, res) {
 
     if (req.method === "GET") {
       try {
-        const result = await db.all("SELECT * FROM Post ORDER BY date DESC")
+        const result = await db.all(
+          "SELECT * FROM Post WHERE id IN (SELECT id FROM Post WHERE like = 1) ORDER BY date DESC"
+        )
         const posts = await Promise.all(
           result.map(async post => {
             const id = post.id
@@ -42,20 +41,23 @@ export default async function Home(req, res) {
             }
           })
         )
-        const tags = await db.all("SELECT * FROM Tag ORDER BY id DESC")
-
-        const config = path.join(process.cwd(), "configs/config.json")
-        const configData = JSON.parse(fs.readFileSync(config))
-        res.status(200).json({
-          code: 0,
-          message: "行了",
-          config: configData,
-          posts: posts,
-          tags: tags,
-        })
+        res.status(200).json({ code: 0, message: "行了", data: posts })
         res.end()
       } catch (error) {
-        // console.log("GET DB", error)
+        console.log("PUT DB", error)
+        res.status(500).json({ code: 1, message: "数据库出错了" })
+        res.end()
+      }
+    } else if (req.method === "PUT") {
+      try {
+        const result = await db.run("UPDATE Post SET like = ? WHERE id = ?", [
+          req.body.like,
+          req.body.id,
+        ])
+        res.status(200).json({ code: 0, message: "行了" })
+        res.end()
+      } catch (error) {
+        console.log("PUT DB", error)
         res.status(500).json({ code: 1, message: "数据库出错了" })
         res.end()
       }
